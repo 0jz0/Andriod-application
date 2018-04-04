@@ -47,29 +47,33 @@ public class MainActivity extends AppCompatActivity
         // Setup button functionality for welcome canvas
         final WelcomeView welcomeView = (WelcomeView) findViewById(R.id.welcome_canvas);
         final Button buttonLine = (Button) findViewById(R.id.welcome_btn_line);
-        final Button buttonRectangle = (Button) findViewById(R.id.welcome_btn_rect);
+        final Button buttonErase = (Button) findViewById(R.id.welcome_btn_erase);
         final Button buttonCircle = (Button) findViewById(R.id.welcome_btn_circle);
         final Button buttonClear = (Button) findViewById(R.id.welcome_btn_clear);
         // Default choice is line
         buttonLine.setTextColor(Color.WHITE);
-        buttonRectangle.setTextColor(Color.GRAY);
+        buttonErase.setTextColor(Color.GRAY);
         buttonCircle.setTextColor(Color.GRAY);
+        buttonClear.setTextColor(Color.GRAY);
         buttonLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 welcomeView.setObjState(WelcomeView.PaintObj.Line);
                 buttonLine.setTextColor(Color.WHITE);
-                buttonRectangle.setTextColor(Color.GRAY);
+                buttonErase.setTextColor(Color.GRAY);
                 buttonCircle.setTextColor(Color.GRAY);
+                buttonClear.setTextColor(Color.GRAY);
             }
         });
-        buttonRectangle.setOnClickListener(new View.OnClickListener() {
+        buttonErase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                welcomeView.setObjState(WelcomeView.PaintObj.Rect);
-                buttonRectangle.setTextColor(Color.WHITE);
+                welcomeView.setObjState(WelcomeView.PaintObj.Erase);
+                buttonErase.setTextColor(Color.WHITE);
                 buttonLine.setTextColor(Color.GRAY);
                 buttonCircle.setTextColor(Color.GRAY);
+                buttonClear.setTextColor(Color.GRAY);
+
             }
         });
         buttonCircle.setOnClickListener(new View.OnClickListener() {
@@ -78,12 +82,20 @@ public class MainActivity extends AppCompatActivity
                 welcomeView.setObjState(WelcomeView.PaintObj.Circle);
                 buttonCircle.setTextColor(Color.WHITE);
                 buttonLine.setTextColor(Color.GRAY);
-                buttonRectangle.setTextColor(Color.GRAY);
+                buttonErase.setTextColor(Color.GRAY);
+                buttonClear.setTextColor(Color.GRAY);
             }
         });
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { welcomeView.clearCanvas(); }
+            public void onClick(View view) {
+                welcomeView.clearCanvas();
+                buttonClear.setTextColor(Color.WHITE);
+                buttonCircle.setTextColor(Color.GRAY);
+                buttonLine.setTextColor(Color.GRAY);
+                buttonErase.setTextColor(Color.GRAY);
+            }
+
         });
     }
 

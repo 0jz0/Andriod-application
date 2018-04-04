@@ -20,12 +20,12 @@ public class WelcomeView extends View{
     // For canvas and pen
     public Canvas canvas;
     public Paint p,q;
-    public enum PaintObj {Line, Rect, Circle};
+    public enum PaintObj {Line, Erase, Circle};
     private Bitmap bitmap;
     // Canvas state and paint state
     private float x, y;
     private float cirleCenterX, cirleCenterY, circleRadius;
-    private float rectLeft, rectTop;
+    //private float rectLeft, rectTop;
     private int bgColor, paintColor, paintColorStepSize = 5;
     private int canvasPosLeft, canvasPosTop;
     private Random rand;
@@ -69,9 +69,9 @@ public class WelcomeView extends View{
 
         q = new Paint(Paint.DITHER_FLAG);
         q.setAntiAlias(true);
-        q.setColor(Color.WHITE);
+        q.setColor(bgColor);
         q.setStrokeCap(Paint.Cap.ROUND);
-        q.setStrokeWidth(8);
+        q.setStrokeWidth(20);
     }
 
     @Override
@@ -91,9 +91,10 @@ public class WelcomeView extends View{
             if (objState == PaintObj.Line) {
                 // For line: Draw a line connected with previous dot
                 canvas.drawLine(x, y, event.getX(), event.getY(), p);
-
-            } else if (objState == PaintObj.Rect) {
+                invalidate();
+            } else if (objState == PaintObj.Erase) {
                 canvas.drawLine(x, y, event.getX(), event.getY(), q);
+                invalidate();
                 // For Rectangle: Restore to bitmap without rectangle and re-draw
                 //canvas.drawRect(rectLeft, rectTop, event.getX(), event.getY(), p);
                // Log.d(TAG, String.format("onTouchEvent: curX=%.3f, curY=%.3f",
@@ -121,7 +122,7 @@ public class WelcomeView extends View{
                 canvas.drawPoint(x, y, p);
                 invalidate();
 
-            } else if (objState == PaintObj.Rect) {
+            } else if (objState == PaintObj.Erase) {
                 x = event.getX();
                 y = event.getY();
                 canvas.drawPoint(x, y, q);
@@ -146,7 +147,7 @@ public class WelcomeView extends View{
         }
 
         // Update previous position for Line mode
-        if (objState == PaintObj.Line) {
+        if (objState == PaintObj.Line || objState == PaintObj.Erase) {
             x = event.getX();
             y = event.getY();
         }
